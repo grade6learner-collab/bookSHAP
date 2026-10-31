@@ -278,3 +278,76 @@ kbd { padding: 3px 5px; border: 1px solid #eeedf2; border-radius: 4px; color: #a
   .day-column { min-height: 130px; padding: 9px; }
   .footer { gap: 12px; padding: 13px 17px 17px; font-size: 8px; }
 }
+
+.login-screen { position: fixed; inset: 0; z-index: 20; display: grid; align-content: center; justify-items: center; overflow-y: auto; padding: 34px 6%; background: radial-gradient(ellipse at 18% 80%,#eeebff 0,transparent 35%),linear-gradient(135deg,#faf9ff,#f7f8fc 60%,#f0effb); }
+.signed-in .login-screen { display: none; }
+.login-brand { position: absolute; top: 30px; left: 5.2%; margin: 0; }
+.login-layout { width: min(100%,980px); display: grid; grid-template-columns: 1fr minmax(330px,420px); gap: clamp(36px,8vw,110px); align-items: center; margin: auto; }
+.login-welcome { position: relative; }
+.login-welcome h1 { margin: 13px 0 11px; font-size: clamp(32px,4.2vw,48px); line-height: 1.12; letter-spacing: -2px; }
+.login-welcome > p { max-width: 380px; color: #858497; font-size: 13px; line-height: 1.7; }
+.login-illustration { position: relative; width: 210px; height: 125px; margin: 38px 0 0 30px; border-radius: 80px 80px 35px 35px; background: linear-gradient(140deg,#ece9ff,#e1dcfb); }
+.login-illustration > span, .login-illustration > i { position: absolute; color: #8275d9; font-size: 23px; font-style: normal; }
+.login-illustration > span { top: 5px; left: 24px; }
+.login-illustration > i { top: 24px; right: 20px; }
+.login-book { position: absolute; width: 100px; height: 69px; left: 55px; bottom: 20px; border: 3px solid white; border-radius: 8px; background: linear-gradient(90deg,#fff8eb 49%,#e9e2ff 50%); box-shadow: 7px 8px 0 #7162d633; transform: rotate(-8deg); }
+.login-card { padding: 30px; border: 1px solid #eeedf4; border-radius: 15px; background: white; box-shadow: 0 16px 55px #3c336b10; }
+.login-card h2 { margin: 8px 0 5px; font-size: 21px; }
+.login-description { margin: 0 0 23px; color: #9291a0; font-size: 11px; }
+.login-label, .teacher-form > label { display: grid; gap: 7px; color: #666579; font-size: 10px; font-weight: 600; }
+.login-card > input, .teacher-form input, .teacher-form textarea, .teacher-form select { width: 100%; min-height: 39px; padding: 9px 11px; border: 1px solid #eae9f1; border-radius: 7px; outline-color: #b8aff0; color: #444359; background: #fff; font-size: 11px; }
+.login-card > input { margin-top: 7px; }
+.login-helper { display: block; margin-top: 7px; color: #9998a7; font-size: 9px; }
+.login-helper strong { color: #7568d3; }
+.role-picker { display: grid; gap: 8px; margin: 20px 0 16px; padding: 0; border: 0; }
+.role-picker legend { margin-bottom: 9px; color: #666579; font-size: 10px; font-weight: 600; }
+.role-option { position: relative; display: flex; align-items: center; gap: 10px; min-height: 57px; padding: 9px 11px; border: 1px solid #eeedf3; border-radius: 8px; cursor: pointer; transition: .15s ease; }
+.role-option:has(input:checked) { border-color: #bcb4ef; background: #fbfaff; box-shadow: 0 0 0 2px #f1efff; }
+.role-option input { width: 14px; height: 14px; margin: 0; accent-color: var(--purple); }
+.role-symbol { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 7px; color: #7062d9; background: #f0efff; font-size: 15px; }
+.role-option strong, .role-option small { display: block; }
+.role-option strong { color: #454459; font-size: 10px; }
+.role-option small { margin-top: 3px; color: #9998a7; font-size: 9px; }
+.login-submit { width: 100%; min-height: 41px; font-size: 11px; }
+.demo-notice { margin: 14px 0 0; padding: 10px; border-radius: 7px; color: #89889a; background: #f8f7fc; font-size: 9px; line-height: 1.55; }
+.demo-notice strong { color: #6558c6; }
+.login-error { margin: 0 0 12px; padding: 9px 10px; border: 1px solid #f1d0cd; border-radius: 7px; color: #a74d48; background: #fff7f6; font-size: 10px; line-height: 1.5; }
+.teacher-nav { margin-top: 8px; border-top: 1px solid var(--line); padding-top: 10px; }
+.profile-copy { min-width: 0; }
+.profile-copy strong { max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.more-button { font-size: 18px; }
+.teacher-forms { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 15px; align-items: start; }
+.teacher-form { display: grid; gap: 13px; padding: 20px; }
+.teacher-form h2 { margin: -7px 0 2px; font-size: 16px; }
+.teacher-form > label { font-size: 10px; }
+.teacher-form textarea { min-height: 72px; resize: vertical; line-height: 1.5; }
+.teacher-form > .button { justify-self: start; }
+.answer-fields { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 10px; }
+.answer-fields label { display: grid; gap: 6px; color: #77768a; font-size: 9px; font-weight: 600; }
+.teacher-materials { margin-top: 16px; }
+.teacher-material-list { display: grid; gap: 8px; }
+.teacher-material-row { display: flex; align-items: center; gap: 11px; padding: 11px; border: 1px solid #efedf4; border-radius: 8px; }
+.teacher-material-mark { width: 31px; height: 31px; display: grid; place-items: center; flex: 0 0 auto; border-radius: 8px; color: #7162d2; background: #f1efff; }
+.teacher-material-copy { flex: 1; min-width: 0; }
+.teacher-material-copy strong, .teacher-material-copy small { display: block; }
+.teacher-material-copy strong { overflow: hidden; color: #4a495c; font-size: 10px; text-overflow: ellipsis; white-space: nowrap; }
+.teacher-material-copy small { margin-top: 4px; color: #9998a7; font-size: 9px; }
+.teacher-material-row > button { border: 0; color: #a25c5a; background: transparent; font-size: 10px; }
+.teacher-empty { padding: 18px 4px; color: #9998a7; font-size: 10px; text-align: center; }
+.teacher-demo-banner .callout-icon { color: #966a29; background: #fff5e3; font-weight: 700; }
+@media (max-width: 800px) {
+  .login-layout { grid-template-columns: 1fr minmax(290px,380px); gap: 24px; }
+  .login-illustration { transform: scale(.8); transform-origin: top left; }
+  .teacher-forms { grid-template-columns: 1fr; }
+}
+@media (max-width: 600px) {
+  .login-screen { align-content: start; padding: 85px 18px 25px; }
+  .login-brand { top: 22px; left: 19px; }
+  .login-layout { width: min(100%,420px); grid-template-columns: 1fr; gap: 17px; }
+  .login-welcome h1 { margin: 8px 0; font-size: 29px; }
+  .login-welcome > p { margin-bottom: 0; font-size: 10px; }
+  .login-illustration { display: none; }
+  .login-card { padding: 21px; }
+  .login-card h2 { font-size: 19px; }
+  .teacher-form { padding: 15px; }
+}

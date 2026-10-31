@@ -56,6 +56,9 @@ const quizzes = [
 ];
 
 const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+const SCHOOL_EMAIL_DOMAIN = "shap.edu.ph";
+const AUTH_STORAGE_KEY = "studyspace-prototype-user";
+const MATERIALS_STORAGE_KEY = "studyspace-teacher-materials";
 const defaultSessions = [
   { subject: "Mathematics", day: 0, time: "16:00" },
   { subject: "Science", day: 1, time: "16:30" },
@@ -67,10 +70,43 @@ let currentGrade = 10;
 let libraryType = "all";
 let selectedSubject = "all";
 let activeQuiz = null;
+let activeUser = loadActiveUser();
+let teacherMaterials = loadTeacherMaterials();
 let quizIndex = 0;
 let quizScore = 0;
 let quizAnswered = false;
 let sessions = loadSessions();
+
+function loadActiveUser() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null");
+    if (saved && typeof saved.email === "string" && saved.email.toLowerCase().endsWith(`@${SCHOOL_EMAIL_DOMAIN}`) && ["student", "teacher"].includes(saved.role)) return saved;
+  } catch (error) {
+    console.warn("Could not read the saved prototype sign-in.", error);
+  }
+  return null;
+}
+
+function loadTeacherMaterials() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(MATERIALS_STORAGE_KEY) || "[]");
+    if (Array.isArray(saved)) return saved.filter(item => item && typeof item.id === "string" && ["reviewer", "quiz"].includes(item.kind) && typeof item.title === "string" && typeof item.subject === "string" && Array.isArray(item.grades));
+  } catch (error) {
+    console.warn("Could not read the saved teacher materials.", error);
+  }
+  return [];
+}
+
+function saveTeacherMaterials() {
+  try {
+    localStorage.setItem(MATERIALS_STORAGE_KEY, JSON.stringify(teacherMaterials));
+    return true;
+  } catch (error) {
+    console.error("Could not save teacher materials.", error);
+    alert("This material could not be saved in this browser. Check your browser storage settings and try again.");
+    return false;
+  }
+}
 
 function loadSessions() {
   try {
@@ -98,8 +134,36 @@ function escapeHtml(value) {
   return String(value).replace(/[&<>"']/g, character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[character]);
 }
 
+function teacherReviewers() {
+  return teacherMaterials.filter(item => item.kind === "reviewer").map(item => ({
+    id: item.id,
+    subject: item.subject,
+    title: item.title,
+    description: item.content,
+    content: item.content,
+    type: "reviewer",
+    icon: subjects.find(subject => subject.name === item.subject)?.icon || "▧",
+    duration: "Teacher reviewer",
+    progress: 0,
+    grade: item.grades
+  }));
+}
+
+function availableQuizzes() {
+  const created = teacherMaterials.filter(item => item.kind === "quiz").map(item => ({
+    id: item.id,
+    subject: item.subject,
+    title: item.title,
+    description: `Teacher-created practice · Grades ${item.grades.join(", ")}`,
+    icon: subjects.find(subject => subject.name === item.subject)?.icon || "◉",
+    grade: item.grades,
+    questions: [item.question]
+  }));
+  return quizzes.concat(created);
+}
+
 function matchingResources() {
-  return resources.filter(resource => resource.grade.includes(currentGrade));
+  return resources.concat(teacherReviewers()).filter(resource => resource.grade.includes(currentGrade));
 }
 
 function resourceCard(resource, compact = false) {
@@ -140,7 +204,7 @@ function renderSpecialViews() {
   const selected = matchingResources();
   document.getElementById("reviewer-grid").innerHTML = selected.filter(item => item.type === "reviewer").map(item => resourceCard(item)).join("");
   document.getElementById("video-grid").innerHTML = selected.filter(item => item.type === "video").map(item => resourceCard(item)).join("");
-  document.getElementById("quiz-list").innerHTML = quizzes.map(quiz => `<article class="quiz-card"><div class="card-icon">${quiz.icon}</div><span class="subject-chip">${escapeHtml(quiz.subject)}</span><h3>${escapeHtml(quiz.title)}</h3><p>${escapeHtml(quiz.description)}</p><div class="quiz-meta"><span>${quiz.questions.length} questions</span><span>·</span><span>About 5 min</span></div><button class="button button-primary" data-quiz="${quiz.id}">Start practice quiz <span>→</span></button></article>`).join("");
+  document.getElementById("quiz-list").innerHTML = availableQuizzes().filter(quiz => !quiz.grade || quiz.grade.includes(currentGrade)).map(quiz => `<article class="quiz-card"><div class="card-icon">${quiz.icon}</div><span class="subject-chip">${escapeHtml(quiz.subject)}</span><h3>${escapeHtml(quiz.title)}</h3><p>${escapeHtml(quiz.description)}</p><div class="quiz-meta"><span>${quiz.questions.length} ${quiz.questions.length === 1 ? "question" : "questions"}</span><span>·</span><span>About 5 min</span></div><button class="button button-primary" data-quiz="${escapeHtml(quiz.id)}">Start practice quiz <span>→</span></button></article>`).join("");
 }
 
 function formatTime(time) {
@@ -180,12 +244,67 @@ function updateGrade() {
   renderSchedule();
 }
 
+function updateProfile() {
+  if (!activeUser) return;
+  document.getElementById("profile-name").textContent = activeUser.role === "teacher" ? "Teacher" : "Student";
+  document.getElementById("profile-detail").textContent = activeUser.email;
+  document.querySelector(".grade-picker").classList.toggle("hidden", activeUser.role === "teacher");
+  document.querySelector(".teacher-nav").classList.toggle("hidden", activeUser.role !== "teacher");
+}
+
+function enterApp(user) {
+  activeUser = user;
+  try {
+    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+  } catch (error) {
+    console.error("Could not save the prototype sign-in.", error);
+    document.getElementById("login-error").textContent = "Your sign-in could not be saved in this browser. Check your browser storage settings and try again.";
+    document.getElementById("login-error").classList.remove("hidden");
+    activeUser = null;
+    return;
+  }
+  document.body.classList.add("signed-in");
+  updateProfile();
+  renderTeacherMaterials();
+  navigate(user.role === "teacher" ? "teacher" : "home");
+}
+
+function signOut() {
+  try {
+    localStorage.removeItem(AUTH_STORAGE_KEY);
+  } catch (error) {
+    console.error("Could not clear the prototype sign-in.", error);
+    alert("Could not sign out in this browser. Check your browser storage settings and try again.");
+    return;
+  }
+  activeUser = null;
+  document.body.classList.remove("signed-in");
+  document.getElementById("login-form").reset();
+  document.getElementById("login-error").classList.add("hidden");
+  document.getElementById("login-email").focus();
+}
+
+function gradeSelection(value) {
+  return value === "all" ? [7, 8, 9, 10, 11, 12] : [Number(value)];
+}
+
+function renderTeacherMaterials() {
+  const list = document.getElementById("teacher-material-list");
+  if (!list) return;
+  if (teacherMaterials.length === 0) {
+    list.innerHTML = `<div class="teacher-empty">You haven’t published any materials yet. Use a form above to create your first one.</div>`;
+    return;
+  }
+  list.innerHTML = `<div class="teacher-material-list">${teacherMaterials.map(item => `<div class="teacher-material-row"><span class="teacher-material-mark">${item.kind === "quiz" ? "◉" : "▧"}</span><div class="teacher-material-copy"><strong>${escapeHtml(item.title)}</strong><small>${escapeHtml(item.subject)} · ${item.kind === "quiz" ? "Mock quiz" : "Reviewer"} · Grades ${escapeHtml(item.grades.join(", "))}</small></div><button type="button" data-delete-material="${escapeHtml(item.id)}" aria-label="Delete ${escapeHtml(item.title)}">Delete</button></div>`).join("")}</div>`;
+}
+
 function navigate(viewName) {
-  const validViews = ["home", "library", "reviewers", "quizzes", "videos", "schedule"];
+  const validViews = ["home", "library", "reviewers", "quizzes", "videos", "schedule", "teacher"];
   if (!validViews.includes(viewName)) return;
+  if (!activeUser || (viewName === "teacher" && activeUser.role !== "teacher")) return;
   document.querySelectorAll(".view").forEach(view => view.classList.toggle("active", view.id === `view-${viewName}`));
   document.querySelectorAll(".nav-link").forEach(link => link.classList.toggle("active", link.dataset.view === viewName));
-  const labels = { home: "Home", library: "Learning library", reviewers: "Reviewers", quizzes: "Mock quizzes", videos: "Video lessons", schedule: "Study schedule" };
+  const labels = { home: "Home", library: "Learning library", reviewers: "Reviewers", quizzes: "Mock quizzes", videos: "Video lessons", schedule: "Study schedule", teacher: "Teacher studio" };
   document.getElementById("breadcrumb-current").textContent = labels[viewName];
   document.getElementById("sidebar").classList.remove("open");
   if (viewName === "schedule") renderSchedule();
@@ -193,7 +312,7 @@ function navigate(viewName) {
 }
 
 function startQuiz(quizId) {
-  activeQuiz = quizzes.find(quiz => quiz.id === quizId);
+  activeQuiz = availableQuizzes().find(quiz => quiz.id === quizId);
   if (!activeQuiz) return;
   quizIndex = 0;
   quizScore = 0;
@@ -248,6 +367,9 @@ function initialize() {
   const today = new Date();
   document.getElementById("today-date").textContent = today.toLocaleDateString(undefined, { weekday: "short", month: "short", day: "numeric" });
   document.getElementById("subject-filter").innerHTML += subjects.map(subject => `<option value="${escapeHtml(subject.name)}">${escapeHtml(subject.name)}</option>`).join("");
+  document.querySelectorAll("#reviewer-form select[name='subject'], #teacher-quiz-form select[name='subject']").forEach(select => {
+    select.innerHTML = subjects.map(subject => `<option value="${escapeHtml(subject.name)}">${escapeHtml(subject.name)}</option>`).join("");
+  });
   document.querySelectorAll(".nav-link").forEach(link => link.addEventListener("click", () => navigate(link.dataset.view)));
   document.querySelectorAll("[data-go]").forEach(button => button.addEventListener("click", () => navigate(button.dataset.go)));
   document.getElementById("grade-select").addEventListener("change", updateGrade);
@@ -263,9 +385,11 @@ function initialize() {
   document.addEventListener("click", event => {
     const resourceButton = event.target.closest("[data-resource]");
     if (resourceButton) {
-      const resource = resources.find(item => item.id === resourceButton.dataset.resource);
+      const resource = resources.concat(teacherReviewers()).find(item => item.id === resourceButton.dataset.resource);
       if (resource?.type === "video") {
         alert("Video lesson: " + resource.title + "\n\nVideo lessons are ready to connect to your school's lesson videos.");
+      } else if (resource?.content) {
+        alert(resource.title + "\n\n" + resource.content);
       } else {
         alert(resource.title + "\n\n" + resource.description + "\n\nThis learning material is ready to connect to your school's lesson content.");
       }
@@ -279,6 +403,21 @@ function initialize() {
     }
     const quizButton = event.target.closest("[data-quiz]");
     if (quizButton) startQuiz(quizButton.dataset.quiz);
+    const deleteMaterialButton = event.target.closest("[data-delete-material]");
+    if (deleteMaterialButton && activeUser?.role === "teacher") {
+      const materialIndex = teacherMaterials.findIndex(item => item.id === deleteMaterialButton.dataset.deleteMaterial);
+      if (materialIndex >= 0) {
+        const [deleted] = teacherMaterials.splice(materialIndex, 1);
+        if (saveTeacherMaterials()) {
+          renderTeacherMaterials();
+          renderHome();
+          renderLibrary();
+          renderSpecialViews();
+        } else {
+          teacherMaterials.splice(materialIndex, 0, deleted);
+        }
+      }
+    }
     const removeButton = event.target.closest("[data-session]");
     if (removeButton) {
       sessions.splice(Number(removeButton.dataset.session), 1);
@@ -299,6 +438,70 @@ function initialize() {
   });
   document.getElementById("quiz-close").addEventListener("click", () => document.getElementById("quiz-modal").classList.add("hidden"));
   document.getElementById("quiz-modal").addEventListener("click", event => { if (event.target.id === "quiz-modal") document.getElementById("quiz-modal").classList.add("hidden"); });
+  document.getElementById("login-form").addEventListener("submit", event => {
+    event.preventDefault();
+    const errorBox = document.getElementById("login-error");
+    const email = document.getElementById("login-email").value.trim().toLowerCase();
+    const role = document.querySelector("input[name='role']:checked").value;
+    if (!email.endsWith(`@${SCHOOL_EMAIL_DOMAIN}`)) {
+      errorBox.textContent = `Please use your school email ending in @${SCHOOL_EMAIL_DOMAIN}.`;
+      errorBox.classList.remove("hidden");
+      return;
+    }
+    errorBox.classList.add("hidden");
+    enterApp({ email, role });
+  });
+  document.getElementById("sign-out").addEventListener("click", signOut);
+  document.getElementById("reviewer-form").addEventListener("submit", event => {
+    event.preventDefault();
+    if (activeUser?.role !== "teacher") return;
+    const form = event.currentTarget;
+    const material = {
+      id: `teacher-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      kind: "reviewer",
+      title: form.elements.title.value.trim(),
+      subject: form.elements.subject.value,
+      grades: gradeSelection(form.elements.grades.value),
+      content: form.elements.content.value.trim()
+    };
+    if (!material.title || !material.content) return;
+    teacherMaterials.push(material);
+    if (!saveTeacherMaterials()) {
+      teacherMaterials.pop();
+      return;
+    }
+    form.reset();
+    renderTeacherMaterials();
+    renderHome();
+    renderLibrary();
+    renderSpecialViews();
+  });
+  document.getElementById("teacher-quiz-form").addEventListener("submit", event => {
+    event.preventDefault();
+    if (activeUser?.role !== "teacher") return;
+    const form = event.currentTarget;
+    const options = [0, 1, 2, 3].map(index => form.elements[`option${index}`].value.trim());
+    const questionText = form.elements.question.value.trim();
+    const explanation = form.elements.explanation.value.trim();
+    if (!questionText || !explanation || options.some(option => !option)) return;
+    const material = {
+      id: `teacher-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`,
+      kind: "quiz",
+      title: form.elements.title.value.trim(),
+      subject: form.elements.subject.value,
+      grades: gradeSelection(form.elements.grades.value),
+      question: { question: questionText, options, answer: Number(form.elements.answer.value), explanation }
+    };
+    if (!material.title) return;
+    teacherMaterials.push(material);
+    if (!saveTeacherMaterials()) {
+      teacherMaterials.pop();
+      return;
+    }
+    form.reset();
+    renderTeacherMaterials();
+    renderSpecialViews();
+  });
   document.addEventListener("keydown", event => {
     if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === "k") {
       event.preventDefault();
@@ -315,6 +518,12 @@ function initialize() {
   renderLibrary();
   renderSpecialViews();
   renderSchedule();
+  renderTeacherMaterials();
+  if (activeUser) {
+    document.body.classList.add("signed-in");
+    updateProfile();
+    navigate(activeUser.role === "teacher" ? "teacher" : "home");
+  }
 }
 
 initialize();

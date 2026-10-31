@@ -12,6 +12,36 @@
   <script src="app.js" defer></script>
 </head>
 <body>
+  <main class="login-screen" id="login-screen">
+    <a class="brand login-brand" href="#" aria-label="StudySpace home">
+      <span class="brand-mark" aria-hidden="true">s</span>
+      <span>studyspace<span class="brand-period">.</span></span>
+    </a>
+    <div class="login-layout">
+      <section class="login-welcome">
+        <div class="eyebrow">YOUR SCHOOL LEARNING HUB</div>
+        <h1>A place to learn<br>and grow together.</h1>
+        <p>Explore lessons, practice at your pace, and share what you know.</p>
+        <div class="login-illustration" aria-hidden="true"><span>✦</span><div class="login-book"></div><i>✧</i></div>
+      </section>
+      <form class="login-card" id="login-form">
+        <div class="eyebrow">WELCOME TO STUDYSPACE</div>
+        <h2>Sign in to your space</h2>
+        <p class="login-description">Use your school email to continue.</p>
+        <label class="login-label" for="login-email">School email</label>
+        <input id="login-email" type="email" placeholder="you@shap.edu.ph" autocomplete="email" required>
+        <span class="login-helper">Use your <strong>@shap.edu.ph</strong> school email.</span>
+        <fieldset class="role-picker">
+          <legend>I’m signing in as</legend>
+          <label class="role-option"><input type="radio" name="role" value="student" checked><span class="role-symbol">✎</span><span><strong>Student</strong><small>Explore your learning space</small></span></label>
+          <label class="role-option"><input type="radio" name="role" value="teacher"><span class="role-symbol">▤</span><span><strong>Teacher</strong><small>Create reviewers and quizzes</small></span></label>
+        </fieldset>
+        <div class="login-error hidden" id="login-error" role="alert"></div>
+        <button class="button button-primary login-submit" type="submit">Continue with school email <span>→</span></button>
+        <p class="demo-notice"><strong>Prototype sign-in:</strong> no verification email is sent. Sign-in and teacher access are not secure until a school login service is connected.</p>
+      </form>
+    </div>
+  </main>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
       <a class="brand" href="#" aria-label="StudySpace home">
@@ -27,6 +57,7 @@
         <button class="nav-link" data-view="quizzes"><span class="nav-icon">◉</span>Mock quizzes</button>
         <button class="nav-link" data-view="videos"><span class="nav-icon">▷</span>Video lessons</button>
         <button class="nav-link" data-view="schedule"><span class="nav-icon">▦</span>Study schedule</button>
+        <button class="nav-link teacher-nav hidden" data-view="teacher"><span class="nav-icon">✎</span>Teacher studio</button>
       </nav>
 
       <div class="sidebar-bottom">
@@ -37,8 +68,8 @@
         </div>
         <div class="profile">
           <div class="avatar">S</div>
-          <div><strong>Student</strong><span>Grade <span id="profile-grade">10</span></span></div>
-          <button class="more-button" aria-label="Profile options">···</button>
+          <div class="profile-copy"><strong id="profile-name">Student</strong><span id="profile-detail">Grade <span id="profile-grade">10</span></span></div>
+          <button class="more-button" id="sign-out" aria-label="Sign out" title="Sign out">↪</button>
         </div>
       </div>
     </aside>
@@ -146,6 +177,38 @@
           <div class="weekly-grid" id="weekly-grid"></div>
           <div class="schedule-note"><span>✦</span> Your schedule is saved on this device. Feel free to adjust it whenever you need.</div>
           <div class="schedule-modal hidden" id="schedule-modal" role="dialog" aria-modal="true" aria-labelledby="schedule-modal-title"><form class="schedule-dialog" id="schedule-form"><button type="button" class="modal-close" id="schedule-close" aria-label="Close">×</button><div class="eyebrow">MAKE A LITTLE TIME</div><h2 id="schedule-modal-title">Add a study session</h2><label>Subject<select id="session-subject" required></select></label><label>Day<select id="session-day" required></select></label><label>Time<input id="session-time" type="time" value="16:00" required></label><button class="button button-primary" type="submit">Add to my schedule</button></form></div>
+        </section>
+
+        <section class="view" id="view-teacher">
+          <div class="page-intro"><div class="eyebrow">YOUR CLASSROOM, ALL IN ONE PLACE</div><h1>Teacher studio</h1><p>Create study materials for students to explore in their learning library.</p></div>
+          <div class="callout-banner teacher-demo-banner"><div class="callout-icon">!</div><div><strong>Prototype teacher space</strong><p>Materials are saved only in this browser. Anyone can choose Teacher in this demo, so do not add private or sensitive content.</p></div></div>
+          <div class="teacher-forms">
+            <form class="panel teacher-form" id="reviewer-form">
+              <div class="eyebrow">SHARE A STUDY GUIDE</div><h2>Create a reviewer</h2>
+              <label>Reviewer title<input name="title" maxlength="100" placeholder="e.g. Photosynthesis essentials" required></label>
+              <label>Subject<select name="subject" required></select></label>
+              <label>Grades<select name="grades" required><option value="all">Grades 7–12</option><option value="7">Grade 7</option><option value="8">Grade 8</option><option value="9">Grade 9</option><option value="10">Grade 10</option><option value="11">Grade 11</option><option value="12">Grade 12</option></select></label>
+              <label>Study notes<textarea name="content" rows="6" maxlength="5000" placeholder="Write the key ideas students should review..." required></textarea></label>
+              <button class="button button-primary" type="submit">Publish reviewer <span>→</span></button>
+            </form>
+            <form class="panel teacher-form" id="teacher-quiz-form">
+              <div class="eyebrow">CHECK FOR UNDERSTANDING</div><h2>Create a mock quiz</h2>
+              <label>Quiz title<input name="title" maxlength="100" placeholder="e.g. Photosynthesis check-in" required></label>
+              <label>Subject<select name="subject" required></select></label>
+              <label>Grades<select name="grades" required><option value="all">Grades 7–12</option><option value="7">Grade 7</option><option value="8">Grade 8</option><option value="9">Grade 9</option><option value="10">Grade 10</option><option value="11">Grade 11</option><option value="12">Grade 12</option></select></label>
+              <label>Question<input name="question" maxlength="300" placeholder="What should students answer?" required></label>
+              <div class="answer-fields">
+                <label>Choice A<input name="option0" maxlength="160" required></label>
+                <label>Choice B<input name="option1" maxlength="160" required></label>
+                <label>Choice C<input name="option2" maxlength="160" required></label>
+                <label>Choice D<input name="option3" maxlength="160" required></label>
+              </div>
+              <label>Correct answer<select name="answer" required><option value="0">Choice A</option><option value="1">Choice B</option><option value="2">Choice C</option><option value="3">Choice D</option></select></label>
+              <label>Answer explanation<textarea name="explanation" rows="3" maxlength="600" placeholder="Explain why the answer is correct..." required></textarea></label>
+              <button class="button button-primary" type="submit">Publish quiz <span>→</span></button>
+            </form>
+          </div>
+          <section class="panel teacher-materials"><div class="section-heading compact"><div><h2>Your published materials</h2><p>Available to students using this browser</p></div></div><div id="teacher-material-list"></div></section>
         </section>
       </div>
       <footer class="footer"><span>Made for curious minds.</span><span>Keep showing up for yourself <span class="footer-heart">♥</span></span></footer>
