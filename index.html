@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f6f7fb">
+  <title>StudySpace — Your school e-library</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" aria-label="StudySpace home">
+        <span class="brand-mark" aria-hidden="true">s</span>
+        <span>studyspace<span class="brand-period">.</span></span>
+      </a>
+
+      <div class="school-label">YOUR LEARNING HUB</div>
+      <nav class="main-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="home"><span class="nav-icon">⌂</span>Home</button>
+        <button class="nav-link" data-view="library"><span class="nav-icon">▤</span>Learning library</button>
+        <button class="nav-link" data-view="reviewers"><span class="nav-icon">▧</span>Reviewers</button>
+        <button class="nav-link" data-view="quizzes"><span class="nav-icon">◉</span>Mock quizzes</button>
+        <button class="nav-link" data-view="videos"><span class="nav-icon">▷</span>Video lessons</button>
+        <button class="nav-link" data-view="schedule"><span class="nav-icon">▦</span>Study schedule</button>
+      </nav>
+
+      <div class="sidebar-bottom">
+        <div class="help-card">
+          <div class="help-icon">✦</div>
+          <strong>Keep learning!</strong>
+          <p>Small steps every day add up.</p>
+        </div>
+        <div class="profile">
+          <div class="avatar">S</div>
+          <div><strong>Student</strong><span>Grade <span id="profile-grade">10</span></span></div>
+          <button class="more-button" aria-label="Profile options">···</button>
+        </div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <button class="mobile-menu" id="mobile-menu" aria-label="Open navigation">☰</button>
+        <div class="breadcrumb">Learning hub <span>/</span> <strong id="breadcrumb-current">Home</strong></div>
+        <div class="topbar-right">
+          <div class="grade-picker">
+            <label for="grade-select">My grade</label>
+            <select id="grade-select" aria-label="Choose your grade">
+              <option value="7">Grade 7</option>
+              <option value="8">Grade 8</option>
+              <option value="9">Grade 9</option>
+              <option value="10" selected>Grade 10</option>
+              <option value="11">Grade 11</option>
+              <option value="12">Grade 12</option>
+            </select>
+          </div>
+          <button class="notification-button" aria-label="Notifications">♧<span></span></button>
+          <div class="avatar top-avatar">S</div>
+        </div>
+      </header>
+
+      <div class="page-content">
+        <section class="view active" id="view-home">
+          <div class="welcome-row">
+            <div>
+              <div class="eyebrow"><span class="sparkle">✦</span> YOUR SPACE TO GROW</div>
+              <h1>Good morning, Student <span class="wave">✋</span></h1>
+              <p class="welcome-subtitle">A little progress today goes a long way. What would you like to learn?</p>
+            </div>
+            <div class="date-pill"><span>◷</span><span id="today-date"></span></div>
+          </div>
+
+          <div class="hero-card">
+            <div class="hero-copy">
+              <span class="hero-kicker">YOUR LEARNING JOURNEY</span>
+              <h2>Curiosity looks<br>good on you.</h2>
+              <p>Explore lessons, practice at your pace, and get ready for what’s next.</p>
+              <button class="button button-light" data-go="library">Explore the library <span>→</span></button>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-sun"></div><div class="art-book back"></div>
+              <div class="art-book front"><span></span><i></i></div>
+              <div class="art-star star-one">✦</div><div class="art-star star-two">✧</div>
+              <div class="art-leaf"></div>
+            </div>
+            <div class="hero-dots"><span></span><span></span><span></span></div>
+          </div>
+
+          <div class="section-heading">
+            <div><h2>Pick up where you left off</h2><p>Keep your learning momentum going</p></div>
+            <button class="text-button" data-go="library">View all <span>→</span></button>
+          </div>
+          <div class="continue-grid" id="continue-grid"></div>
+
+          <div class="lower-grid">
+            <section class="panel subject-panel">
+              <div class="section-heading compact"><div><h2>Explore by subject</h2><p>Find something that sparks your interest</p></div><button class="text-button" data-go="library">See all →</button></div>
+              <div class="subject-grid" id="subject-grid"></div>
+            </section>
+            <section class="panel schedule-preview">
+              <div class="section-heading compact"><div><h2>Your study plan</h2><p>A balanced week starts here</p></div><button class="text-button" data-go="schedule">Open plan →</button></div>
+              <div id="schedule-preview"></div>
+            </section>
+          </div>
+        </section>
+
+        <section class="view" id="view-library">
+          <div class="page-intro"><div class="eyebrow">LEARN SOMETHING NEW</div><h1>Learning library</h1><p>Browse lessons and learning materials picked for Grade <span class="grade-inline">10</span>.</p></div>
+          <div class="toolbar">
+            <label class="search-box"><span>⌕</span><input id="library-search" type="search" placeholder="Search topics, subjects, or lessons..." aria-label="Search learning materials"><kbd>⌘ K</kbd></label>
+            <select id="subject-filter" class="filter-select" aria-label="Filter by subject"><option value="all">All subjects</option></select>
+          </div>
+          <div class="filter-tabs" id="library-tabs"><button class="filter-tab active" data-filter="all">All materials</button><button class="filter-tab" data-filter="lesson">Lessons</button><button class="filter-tab" data-filter="reviewer">Reviewers</button><button class="filter-tab" data-filter="video">Video lessons</button></div>
+          <div class="results-label" id="results-label"></div>
+          <div class="resource-grid" id="library-grid"></div>
+          <div class="empty-state hidden" id="library-empty"><span>⌕</span><h3>No materials found</h3><p>Try a different search or subject.</p></div>
+        </section>
+
+        <section class="view" id="view-reviewers">
+          <div class="page-intro"><div class="eyebrow">PREPARE WITH CONFIDENCE</div><h1>Reviewers</h1><p>Clear, focused study guides to help you revise the important ideas.</p></div>
+          <div class="callout-banner"><div class="callout-icon">✦</div><div><strong>Your next great review starts here.</strong><p>Choose a subject to find summaries, key concepts, and practice prompts.</p></div></div>
+          <div class="resource-grid" id="reviewer-grid"></div>
+        </section>
+
+        <section class="view" id="view-quizzes">
+          <div class="page-intro"><div class="eyebrow">PRACTICE MAKES PROGRESS</div><h1>Mock quizzes</h1><p>Check what you know with a quick, low-pressure practice quiz.</p></div>
+          <div class="quiz-layout"><div class="quiz-list" id="quiz-list"></div><div class="quiz-side panel"><div class="quiz-side-icon">◎</div><h3>Practice at your pace</h3><p>Quizzes are for learning, not grading. Review the explanations and try again whenever you’re ready.</p><div class="quiz-stat"><span>✦</span><div><strong>Learn from every answer</strong><small>See explanations after each question</small></div></div><div class="quiz-stat"><span>◷</span><div><strong>No time pressure</strong><small>Take as long as you need</small></div></div></div></div>
+          <div class="quiz-modal hidden" id="quiz-modal" role="dialog" aria-modal="true" aria-labelledby="quiz-title"><div class="quiz-dialog"><button class="modal-close" id="quiz-close" aria-label="Close quiz">×</button><div id="quiz-content"></div></div></div>
+        </section>
+
+        <section class="view" id="view-videos">
+          <div class="page-intro"><div class="eyebrow">WATCH, LISTEN, UNDERSTAND</div><h1>Video lessons</h1><p>Make tricky topics easier with short, guided lessons.</p></div>
+          <div class="video-feature"><div class="video-feature-copy"><span class="hero-kicker">LEARN AT YOUR OWN PACE</span><h2>Press play on<br>your next big idea.</h2><p>Pick a topic, settle in, and learn one step at a time.</p></div><div class="video-feature-art" aria-hidden="true"><div class="play-circle">▶</div><div class="video-shape shape-a"></div><div class="video-shape shape-b"></div></div></div>
+          <div class="section-heading"><div><h2>Lessons for Grade <span class="grade-inline">10</span></h2><p>Short videos for your current subjects</p></div></div>
+          <div class="resource-grid" id="video-grid"></div>
+        </section>
+
+        <section class="view" id="view-schedule">
+          <div class="page-intro"><div class="eyebrow">MAKE TIME FOR WHAT MATTERS</div><h1>Study schedule</h1><p>A flexible weekly plan to help you build a steady study routine.</p></div>
+          <div class="schedule-header panel"><div><span class="week-label">THIS WEEK</span><h2 id="week-range"></h2><p>One focused session at a time. You’ve got this!</p></div><button class="button button-primary" id="add-session"><span>＋</span> Add study session</button></div>
+          <div class="weekly-grid" id="weekly-grid"></div>
+          <div class="schedule-note"><span>✦</span> Your schedule is saved on this device. Feel free to adjust it whenever you need.</div>
+          <div class="schedule-modal hidden" id="schedule-modal" role="dialog" aria-modal="true" aria-labelledby="schedule-modal-title"><form class="schedule-dialog" id="schedule-form"><button type="button" class="modal-close" id="schedule-close" aria-label="Close">×</button><div class="eyebrow">MAKE A LITTLE TIME</div><h2 id="schedule-modal-title">Add a study session</h2><label>Subject<select id="session-subject" required></select></label><label>Day<select id="session-day" required></select></label><label>Time<input id="session-time" type="time" value="16:00" required></label><button class="button button-primary" type="submit">Add to my schedule</button></form></div>
+        </section>
+      </div>
+      <footer class="footer"><span>Made for curious minds.</span><span>Keep showing up for yourself <span class="footer-heart">♥</span></span></footer>
+    </main>
+  </div>
+</body>
+</html>
