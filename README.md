@@ -14,7 +14,7 @@ A responsive school e-library for students in Grades 7–12, built with plain HT
 
 - Grade-specific learning library with subject and keyword filters
 - Reviewer examples for Grades 7–12 with key ideas, worked examples, and self-check questions
-- Grade-specific links to official SHAP self-learning modules for Grades 7–12
+- Grade-specific SHAP-guided study reviewers, paired with links to the official module pages
 - bookSHAP branding with the Sacred Heart Academy seal and green-and-orange colors
 - Reviewers and video lesson listings
 - Interactive practice quizzes with answer explanations
@@ -27,7 +27,7 @@ A responsive school e-library for students in Grades 7–12, built with plain HT
 
 Open `index.html` in a browser. No build step or dependencies are required.
 
-The learning materials and quizzes are sample content. Video lessons are placeholders and need real lesson video links to play.
+The learning materials and quizzes are sample content. SHAP reviewer guides follow the subjects and module organization shown on the linked school pages; use the assigned official PDF for exact lesson titles and coverage. Video lessons are placeholders and need real lesson video links to play.
 
 ## Publish with GitHub Pages
 
