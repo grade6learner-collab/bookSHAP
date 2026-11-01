@@ -3,8 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#f6f7fb">
-  <title>StudySpace — Your school e-library</title>
+  <meta name="theme-color" content="#0d5b32">
+  <title>bookSHAP — Your school e-library</title>
+  <link rel="icon" href="bookshap-logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -13,9 +14,9 @@
 </head>
 <body>
   <main class="login-screen" id="login-screen">
-    <a class="brand login-brand" href="#" aria-label="StudySpace home">
-      <span class="brand-mark" aria-hidden="true">s</span>
-      <span>studyspace<span class="brand-period">.</span></span>
+    <a class="brand login-brand" href="#" aria-label="bookSHAP home">
+      <img class="brand-mark" src="bookshap-logo.png" alt="">
+      <span>book<span class="brand-period">SHAP</span></span>
     </a>
     <div class="login-layout">
       <section class="login-welcome">
@@ -25,7 +26,7 @@
         <div class="login-illustration" aria-hidden="true"><span>✦</span><div class="login-book"></div><i>✧</i></div>
       </section>
       <form class="login-card" id="login-form">
-        <div class="eyebrow">WELCOME TO STUDYSPACE</div>
+        <div class="eyebrow">WELCOME TO BOOKSHAP</div>
         <h2>Sign in to your space</h2>
         <p class="login-description">Use your school email to continue.</p>
         <label class="login-label" for="login-email">School email</label>
@@ -44,9 +45,9 @@
   </main>
   <div class="app-shell">
     <aside class="sidebar" id="sidebar">
-      <a class="brand" href="#" aria-label="StudySpace home">
-        <span class="brand-mark" aria-hidden="true">s</span>
-        <span>studyspace<span class="brand-period">.</span></span>
+      <a class="brand" href="#" aria-label="bookSHAP home">
+        <img class="brand-mark" src="bookshap-logo.png" alt="">
+        <span>book<span class="brand-period">SHAP</span></span>
       </a>
 
       <div class="school-label">YOUR LEARNING HUB</div>
@@ -68,7 +69,7 @@
         </div>
         <div class="profile">
           <div class="avatar">S</div>
-          <div class="profile-copy"><strong id="profile-name">Student</strong><span id="profile-detail">Grade <span id="profile-grade">10</span></span></div>
+          <div class="profile-copy"><strong id="profile-name">Student</strong><span id="profile-detail">Grade <span id="profile-grade">10</span></span><span id="profile-email"></span></div>
           <button class="more-button" id="sign-out" aria-label="Sign out" title="Sign out">↪</button>
         </div>
       </div>
@@ -157,6 +158,14 @@
           <div class="callout-banner"><div class="callout-icon">✦</div><div><strong>Your next great review starts here.</strong><p>Choose a subject to find summaries, key concepts, and practice prompts.</p></div></div>
           <div class="resource-grid" id="reviewer-grid"></div>
         </section>
+        <div class="reviewer-modal hidden" id="reviewer-modal" role="dialog" aria-modal="true" aria-labelledby="reviewer-modal-title">
+          <article class="reviewer-dialog">
+            <button class="modal-close" id="reviewer-close" aria-label="Close reviewer">×</button>
+            <div class="eyebrow" id="reviewer-subject"></div>
+            <h2 id="reviewer-modal-title"></h2>
+            <div class="reviewer-body" id="reviewer-body"></div>
+          </article>
+        </div>
 
         <section class="view" id="view-quizzes">
           <div class="page-intro"><div class="eyebrow">PRACTICE MAKES PROGRESS</div><h1>Mock quizzes</h1><p>Check what you know with a quick, low-pressure practice quiz.</p></div>

@@ -1,6 +1,6 @@
-# StudySpace
+# bookSHAP
 
-A responsive e-library demo for students in Grades 7–12, built with plain HTML, CSS, and JavaScript.
+A responsive school e-library for students in Grades 7–12, built with plain HTML, CSS, and JavaScript.
 
 ## Prototype sign-in and teacher studio
 
@@ -13,6 +13,9 @@ A responsive e-library demo for students in Grades 7–12, built with plain HTML
 ## Features
 
 - Grade-specific learning library with subject and keyword filters
+- Reviewer examples for Grades 7–12 with key ideas, worked examples, and self-check questions
+- Grade-specific links to official SHAP self-learning modules for Grades 7–12
+- bookSHAP branding with the Sacred Heart Academy seal and green-and-orange colors
 - Reviewers and video lesson listings
 - Interactive practice quizzes with answer explanations
 - Editable weekly study schedule saved in the browser

@@ -29,7 +29,62 @@ const resources = [
   { id: "physics-motion", subject: "Science", title: "Motion, Forces & Momentum", description: "Review the principles behind movement and force.", type: "video", icon: "▷", duration: "15 min", progress: 0, grade: [11, 12] },
   { id: "world-history", subject: "Social Studies", title: "Connecting world histories", description: "Explore connections between people, places, and change.", type: "lesson", icon: "◎", duration: "16 min", progress: 0, grade: [11, 12] },
   { id: "academic-filipino", subject: "Filipino", title: "Pagsulat ng akademikong teksto", description: "Mga gabay sa malinaw at mabisang pagsulat akademiko.", type: "reviewer", icon: "✎", duration: "11 min read", progress: 0, grade: [11, 12] },
-  { id: "media-literacy", subject: "ICT", title: "Media Literacy & Misinformation", description: "Check sources and think critically about online content.", type: "video", icon: "⌘", duration: "8 min", progress: 0, grade: [10, 11, 12] }
+  { id: "media-literacy", subject: "ICT", title: "Media Literacy & Misinformation", description: "Check sources and think critically about online content.", type: "video", icon: "⌘", duration: "8 min", progress: 0, grade: [10, 11, 12] },
+  { id: "sample-g7-fractions", subject: "Mathematics", title: "Grade 7 Reviewer: Fractions", description: "Equivalent fractions, simplifying, and adding unlike denominators.", type: "reviewer", icon: "∑", duration: "5 min read", progress: 0, grade: [7], content: [
+    { heading: "1. Equivalent fractions", body: "Equivalent fractions name the same amount. Multiply or divide the numerator and denominator by the same nonzero number. For example, 1/2 = 2/4 = 4/8." },
+    { heading: "2. Simplify before you finish", body: "A fraction is in simplest form when its numerator and denominator have no common factor greater than 1. Divide both by their greatest common factor: 12/18 = 2/3." },
+    { heading: "3. Add fractions with unlike denominators", body: "First find a common denominator, then add the numerators. Keep the denominator and simplify the result.\nExample: 1/3 + 1/4 = 4/12 + 3/12 = 7/12." },
+    { heading: "Try it", body: "What is 2/5 + 1/10? Check: 2/5 = 4/10, so the sum is 5/10 = 1/2." }
+  ] },
+  { id: "sample-g8-cells", subject: "Science", title: "Grade 8 Reviewer: Cells", description: "Cell parts, their functions, and plant–animal cell differences.", type: "reviewer", icon: "⚛", duration: "5 min read", progress: 0, grade: [8], content: [
+    { heading: "1. Cells are living things' basic units", body: "All living organisms are made of cells. Some organisms consist of one cell; plants and animals are made of many specialized cells." },
+    { heading: "2. Match each structure to its job", body: "The cell membrane controls what enters and leaves. The nucleus stores DNA and helps direct cell activities. The cytoplasm is where many cell processes happen. Mitochondria release usable energy from food." },
+    { heading: "3. Plant cells have extra structures", body: "Plant cells have a cell wall for support, chloroplasts that capture light for photosynthesis, and usually a large central vacuole for storing water and other materials. Animal cells do not have cell walls or chloroplasts." },
+    { heading: "Try it", body: "Which structure helps a plant cell make sugars using sunlight? Check: chloroplasts contain chlorophyll, which captures light energy." }
+  ] },
+  { id: "sample-g9-theme", subject: "English", title: "Grade 9 Reviewer: Theme & Evidence", description: "Distinguish a story's theme from its topic and support an idea with evidence.", type: "reviewer", icon: "Aa", duration: "5 min read", progress: 0, grade: [9], content: [
+    { heading: "1. Topic is not the same as theme", body: "A topic is a broad subject, such as friendship or courage. A theme is a message about that subject, expressed as a complete idea—for example, trust can grow when friends communicate honestly." },
+    { heading: "2. Build an interpretation from clues", body: "Notice a character's choices, conflicts, repeated images, and how the story ends. Look for a pattern across the text rather than treating one event as proof of the whole theme." },
+    { heading: "3. Support your reading", body: "State your interpretation, point to a relevant scene or short quotation, then explain how that evidence supports your idea. A quotation by itself does not explain your reasoning." },
+    { heading: "Try it", body: "A character admits a mistake, repairs a friendship, and later apologizes sooner. What theme might these events suggest? Check: taking responsibility can help rebuild trust. Support this interpretation with details from the story." }
+  ] },
+  { id: "sample-g10-quadratics", subject: "Mathematics", title: "Grade 10 Reviewer: Quadratics", description: "Recognize quadratic expressions, factor simple trinomials, and check solutions.", type: "reviewer", icon: "∑", duration: "6 min read", progress: 0, grade: [10], content: [
+    { heading: "1. Recognize a quadratic", body: "A quadratic expression has a squared variable as its highest power. The standard form is ax² + bx + c, where a is not zero. Its graph is a parabola." },
+    { heading: "2. Factor a simple trinomial", body: "For x² + bx + c, look for two numbers whose product is c and whose sum is b.\nExample: x² + 5x + 6 = (x + 2)(x + 3), because 2 × 3 = 6 and 2 + 3 = 5." },
+    { heading: "3. Solve and check", body: "To solve x² + 5x + 6 = 0, write (x + 2)(x + 3) = 0. If a product is zero, at least one factor is zero, so x = −2 or x = −3. Substitute each value into the original equation to check." },
+    { heading: "Try it", body: "Factor x² + 7x + 12. Check: (x + 3)(x + 4), since 3 × 4 = 12 and 3 + 4 = 7." }
+  ] },
+  { id: "sample-g11-functions", subject: "Mathematics", title: "Grade 11 Reviewer: Functions", description: "Evaluate functions, interpret notation, and distinguish domain from range.", type: "reviewer", icon: "∑", duration: "6 min read", progress: 0, grade: [11], content: [
+    { heading: "1. Read function notation", body: "In f(x), the input is x and the output is f(x). The notation does not mean f multiplied by x." },
+    { heading: "2. Evaluate a function", body: "Replace each x with the given input and follow the order of operations.\nExample: if f(x) = 2x² − 1, then f(3) = 2(3²) − 1 = 18 − 1 = 17." },
+    { heading: "3. Domain and range", body: "The domain is the set of allowed inputs; the range is the set of outputs those inputs produce. For a table, read domain from the input column and range from the output column. For a graph, look from left to right for domain and bottom to top for range." },
+    { heading: "Try it", body: "If g(x) = 3x + 2, what is g(−1)? Check: g(−1) = 3(−1) + 2 = −1." }
+  ] },
+  { id: "sample-g12-source-check", subject: "ICT", title: "Grade 12 Reviewer: Checking Online Sources", description: "Use lateral reading and evidence to evaluate a claim before sharing it.", type: "reviewer", icon: "⌘", duration: "6 min read", progress: 0, grade: [12], content: [
+    { heading: "1. Pause before sharing", body: "A dramatic headline or image can be designed to trigger a quick reaction. Read beyond the headline, check the date, and identify the specific claim being made." },
+    { heading: "2. Read laterally", body: "Instead of trusting a site's own description of itself, open other reliable sources in new tabs. Look for independent reporting, relevant expertise, and a traceable original source for key evidence." },
+    { heading: "3. Check evidence and context", body: "Ask whether data are presented in context, whether a quotation is complete, and whether images match the date and place claimed. Separate a source's evidence from its opinion." },
+    { heading: "4. Decide responsibly", body: "Corroborate important claims with multiple independent, credible sources. If evidence is weak or unclear, do not present the claim as established fact; choose not to share it." },
+    { heading: "Try it", body: "A post cites an expert but links only to a screenshot. What is a useful next step? Check: search for the expert and statement using independent sources, then find the original study or interview before drawing a conclusion." }
+  ] },
+  { id: "shap-modules-g7", subject: "SHAP Modules", title: "Grade 7 SHAP Self-Learning Modules", description: "Official Kaunlaran High School self-learning modules for Grade 7.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [7], sourceUrl: "https://sites.google.com/deped.gov.ph/khs-self-learning-modules/grade-seven?authuser=0", content: [
+    { heading: "Official Grade 7 materials", body: "Open the SHAP Self-Learning Modules page to browse and study the available subject modules." }
+  ] },
+  { id: "shap-modules-g8", subject: "SHAP Modules", title: "Grade 8 SHAP Self-Learning Modules", description: "Official Kaunlaran High School self-learning modules for Grade 8.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [8], sourceUrl: "https://sites.google.com/deped.gov.ph/khs-self-learning-modules/grade-eight", content: [
+    { heading: "Official Grade 8 materials", body: "Open the SHAP Self-Learning Modules page to browse and study the available subject modules." }
+  ] },
+  { id: "shap-modules-g9", subject: "SHAP Modules", title: "Grade 9 SHAP Self-Learning Modules", description: "Official Kaunlaran High School self-learning modules for Grade 9.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [9], sourceUrl: "https://sites.google.com/deped.gov.ph/khs-self-learning-modules/grade-nine", content: [
+    { heading: "Official Grade 9 materials", body: "Open the SHAP Self-Learning Modules page to browse and study the available subject modules." }
+  ] },
+  { id: "shap-modules-g10", subject: "SHAP Modules", title: "Grade 10 SHAP Self-Learning Modules", description: "Official Kaunlaran High School self-learning modules for Grade 10.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [10], sourceUrl: "https://sites.google.com/deped.gov.ph/grade10/grade-ten", content: [
+    { heading: "Official Grade 10 materials", body: "Open the SHAP Self-Learning Modules page to browse and study the available subject modules." }
+  ] },
+  { id: "shap-modules-g11", subject: "SHAP Modules", title: "Grade 11 SHAP Self-Learning Modules", description: "Official Kaunlaran High School Senior High School learning modules for Grade 11.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [11], sourceUrl: "https://sites.google.com/deped.gov.ph/khs-self-learning-modules/senior-high-school", content: [
+    { heading: "Official Grade 11 materials", body: "Open the SHAP Senior High School Self-Learning Modules page to browse and study the available subject modules." }
+  ] },
+  { id: "shap-modules-g12", subject: "SHAP Modules", title: "Grade 12 SHAP Self-Learning Modules", description: "Official Kaunlaran High School Senior High School learning modules for Grade 12.", type: "reviewer", icon: "▤", duration: "Official modules", progress: 0, grade: [12], sourceUrl: "https://sites.google.com/deped.gov.ph/khs-self-learning-modules/senior-high-school", content: [
+    { heading: "Official Grade 12 materials", body: "Open the SHAP Senior High School Self-Learning Modules page to browse and study the available subject modules." }
+  ] }
 ];
 
 const quizzes = [
@@ -207,6 +262,31 @@ function renderSpecialViews() {
   document.getElementById("quiz-list").innerHTML = availableQuizzes().filter(quiz => !quiz.grade || quiz.grade.includes(currentGrade)).map(quiz => `<article class="quiz-card"><div class="card-icon">${quiz.icon}</div><span class="subject-chip">${escapeHtml(quiz.subject)}</span><h3>${escapeHtml(quiz.title)}</h3><p>${escapeHtml(quiz.description)}</p><div class="quiz-meta"><span>${quiz.questions.length} ${quiz.questions.length === 1 ? "question" : "questions"}</span><span>·</span><span>About 5 min</span></div><button class="button button-primary" data-quiz="${escapeHtml(quiz.id)}">Start practice quiz <span>→</span></button></article>`).join("");
 }
 
+function reviewerBodyHtml(resource) {
+  const sourceLink = resource.sourceUrl
+    ? `<a class="button button-primary reviewer-source-link" href="${escapeHtml(resource.sourceUrl)}" target="_blank" rel="noopener noreferrer">Open official Grade ${currentGrade} modules <span>↗</span></a>`
+    : "";
+  if (Array.isArray(resource.content)) {
+    return resource.content.map(section => `<section class="reviewer-section"><h3>${escapeHtml(section.heading)}</h3><p>${escapeHtml(section.body)}</p></section>`).join("") + sourceLink;
+  }
+  if (typeof resource.content === "string") {
+    return `<section class="reviewer-section"><p>${escapeHtml(resource.content)}</p></section>${sourceLink}`;
+  }
+  return `<section class="reviewer-section"><h3>Review focus</h3><p>${escapeHtml(resource.description)}</p><p>Use this topic as a starting point: explain the key idea in your own words, then support it with an example from your class notes.</p></section>${sourceLink}`;
+}
+
+function openReviewer(resource) {
+  document.getElementById("reviewer-subject").textContent = `GRADE ${currentGrade} · ${resource.subject}`;
+  document.getElementById("reviewer-modal-title").textContent = resource.title;
+  document.getElementById("reviewer-body").innerHTML = reviewerBodyHtml(resource);
+  document.getElementById("reviewer-modal").classList.remove("hidden");
+  document.getElementById("reviewer-close").focus();
+}
+
+function closeReviewer() {
+  document.getElementById("reviewer-modal").classList.add("hidden");
+}
+
 function formatTime(time) {
   const [hours, minutes] = time.split(":").map(Number);
   const suffix = hours >= 12 ? "PM" : "AM";
@@ -247,7 +327,7 @@ function updateGrade() {
 function updateProfile() {
   if (!activeUser) return;
   document.getElementById("profile-name").textContent = activeUser.role === "teacher" ? "Teacher" : "Student";
-  document.getElementById("profile-detail").textContent = activeUser.email;
+  document.getElementById("profile-email").textContent = activeUser.email;
   document.querySelector(".grade-picker").classList.toggle("hidden", activeUser.role === "teacher");
   document.querySelector(".teacher-nav").classList.toggle("hidden", activeUser.role !== "teacher");
 }
@@ -386,7 +466,9 @@ function initialize() {
     const resourceButton = event.target.closest("[data-resource]");
     if (resourceButton) {
       const resource = resources.concat(teacherReviewers()).find(item => item.id === resourceButton.dataset.resource);
-      if (resource?.type === "video") {
+      if (resource?.type === "reviewer") {
+        openReviewer(resource);
+      } else if (resource?.type === "video") {
         alert("Video lesson: " + resource.title + "\n\nVideo lessons are ready to connect to your school's lesson videos.");
       } else if (resource?.content) {
         alert(resource.title + "\n\n" + resource.content);
@@ -438,6 +520,8 @@ function initialize() {
   });
   document.getElementById("quiz-close").addEventListener("click", () => document.getElementById("quiz-modal").classList.add("hidden"));
   document.getElementById("quiz-modal").addEventListener("click", event => { if (event.target.id === "quiz-modal") document.getElementById("quiz-modal").classList.add("hidden"); });
+  document.getElementById("reviewer-close").addEventListener("click", closeReviewer);
+  document.getElementById("reviewer-modal").addEventListener("click", event => { if (event.target.id === "reviewer-modal") closeReviewer(); });
   document.getElementById("login-form").addEventListener("submit", event => {
     event.preventDefault();
     const errorBox = document.getElementById("login-error");
@@ -510,6 +594,7 @@ function initialize() {
     }
     if (event.key === "Escape") {
       closeSessionModal();
+      closeReviewer();
       document.getElementById("quiz-modal").classList.add("hidden");
       document.getElementById("sidebar").classList.remove("open");
     }
