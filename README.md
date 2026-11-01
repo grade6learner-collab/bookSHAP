@@ -6,6 +6,7 @@ A responsive school e-library for students in Grades 7–12, built with plain HT
 
 - Sign in with an email ending in `@shap.edu.ph` and choose Student or Teacher.
 - Students land in the learning hub. Teachers land in the Teacher studio, where they can publish reviewers and one-question practice quizzes for selected grades.
+- Prototype sign-in lasts for the current browser tab; a fresh tab or browser session returns to the student/teacher login page.
 - Teacher materials are stored in the current browser and appear for student sign-ins using that same browser.
 - This is a front-end prototype only: it does not send verification emails, securely verify school accounts or teacher roles, or sync materials between devices. The role picker is not access control. Do not use it for private content or real student records.
 - A production deployment needs school-approved authentication with email verification, trusted teacher-role assignment, and a shared backend/database. GitHub Pages alone cannot provide these services.

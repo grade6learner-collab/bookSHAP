@@ -140,7 +140,7 @@ const quizzes = [
 
 const dayNames = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
 const SCHOOL_EMAIL_DOMAIN = "shap.edu.ph";
-const AUTH_STORAGE_KEY = "studyspace-prototype-user";
+const AUTH_STORAGE_KEY = "bookshap-session-user";
 const MATERIALS_STORAGE_KEY = "studyspace-teacher-materials";
 const defaultSessions = [
   { subject: "Mathematics", day: 0, time: "16:00" },
@@ -162,7 +162,7 @@ let sessions = loadSessions();
 
 function loadActiveUser() {
   try {
-    const saved = JSON.parse(localStorage.getItem(AUTH_STORAGE_KEY) || "null");
+    const saved = JSON.parse(sessionStorage.getItem(AUTH_STORAGE_KEY) || "null");
     if (saved && typeof saved.email === "string" && saved.email.toLowerCase().endsWith(`@${SCHOOL_EMAIL_DOMAIN}`) && ["student", "teacher"].includes(saved.role)) return saved;
   } catch (error) {
     console.warn("Could not read the saved prototype sign-in.", error);
@@ -363,7 +363,7 @@ function updateProfile() {
 function enterApp(user) {
   activeUser = user;
   try {
-    localStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
+    sessionStorage.setItem(AUTH_STORAGE_KEY, JSON.stringify(user));
   } catch (error) {
     console.error("Could not save the prototype sign-in.", error);
     document.getElementById("login-error").textContent = "Your sign-in could not be saved in this browser. Check your browser storage settings and try again.";
@@ -379,7 +379,7 @@ function enterApp(user) {
 
 function signOut() {
   try {
-    localStorage.removeItem(AUTH_STORAGE_KEY);
+    sessionStorage.removeItem(AUTH_STORAGE_KEY);
   } catch (error) {
     console.error("Could not clear the prototype sign-in.", error);
     alert("Could not sign out in this browser. Check your browser storage settings and try again.");
